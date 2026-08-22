@@ -14,9 +14,8 @@ src = $(addprefix src/, \
 )
 
 CFLAGS = -std=c99
-CFLAGS += $(shell $(NWLINK) eadk-cflags-c-app 2>/dev/null || $(NWLINK) eadk-cflags-web 2>/dev/null || echo "")
-CFLAGS += -I$(shell npx --yes -- eadk-includes 2>/dev/null || echo ".")
 CFLAGS += -Os -Wall -ggdb
+CFLAGS += -mcpu=cortex-m7 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16
 
 LDFLAGS = -Wl,--relocatable
 LDFLAGS += -nostartfiles
