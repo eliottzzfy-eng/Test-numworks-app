@@ -1,0 +1,33 @@
+name: Build NumWorks App
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install ARM Toolchain
+        uses: numworks/setup-arm-toolchain@latest
+
+      - name: Run build
+        run: make build
+
+      - name: Upload .nwa Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: numworks-app
+          path: output/app.nwa
