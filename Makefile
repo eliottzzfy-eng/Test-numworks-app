@@ -14,7 +14,7 @@ src = $(addprefix src/, \
 )
 
 CFLAGS = -std=c99
-CFLAGS += $(shell $(NWLINK) eadk-cflags)
+CFLAGS += $(shell $(NWLINK) eadk-cflags-c)
 CFLAGS += -Os -Wall
 CFLAGS += -ggdb
 
@@ -44,6 +44,7 @@ $(BUILD_DIR)/app.nwa: $(call object_for,$(src)) $(BUILD_DIR)/icon.o
 
 $(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
 	@echo "CC $^"
+	$(Q) mkdir -p $(dir $@)
 	$(Q) $(CC) $(CFLAGS) -c $^ -o $@
 
 $(BUILD_DIR)/icon.o: src/icon.png | $(BUILD_DIR)
